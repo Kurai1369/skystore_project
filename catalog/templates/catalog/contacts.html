@@ -1,0 +1,167 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyStore - Контакты</title>
+
+    <!-- ============================================ -->
+    <!-- ============== Bootstrap CSS =============== -->
+    <!-- ============================================ -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- ============================================ -->
+    <!-- ============== Bootstrap Icons ============= -->
+    <!-- ============================================ -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- ========= НАВИГАЦИЯ (меню сверху) ========== -->
+    <!-- ============================================ -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'catalog:home' %}">Skystore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'catalog:home' %}">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'catalog:contacts' %}">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- ============= ГЛАВНЫЙ КОНТЕНТ ============== -->
+    <!-- ============================================ -->
+    <main class="container py-5">
+        <h1 class="mb-4 text-center">Контакты</h1>
+
+        <div class="row justify-content-center">
+            <!-- Таблица с контактной информацией -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <i class="bi bi-building me-2"></i>Информация о компании
+                        </h5>
+                        <table class="table table-bordered table-striped mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="table-light" style="width: 40%;">Страна</th>
+                                    <td>USA</td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">ИНН</th>
+                                    <td>91-1144442</td>
+                                </tr>
+                                <tr>
+                                    <th class="table-light">Адрес</th>
+                                    <td>Redmond, WA, 98052-6399</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- =========== ФОРМА ОБРАТНОЙ СВЯЗИ =========== -->
+        <!-- ============================================ -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h5 class="card-title text-center mb-4">
+                            <i class="bi bi-envelope-fill me-2 text-primary"></i>
+                            Свяжитесь с нами
+                        </h5>
+
+                        <!-- Сообщение об успешной отправке -->
+                        {% if success %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle-fill me-2"></i>
+                            <strong>Спасибо!</strong> Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endif %}
+
+                        <!-- Форма -->
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label">
+                                    <i class="bi bi-person me-1"></i>Имя
+                                </label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Введите ваше имя"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">
+                                    <i class="bi bi-telephone me-1"></i>Телефон
+                                </label>
+                                <input
+                                    type="tel"
+                                    class="form-control"
+                                    id="phone"
+                                    name="phone"
+                                    placeholder="+7 (___) ___-__-__"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="message" class="form-label">
+                                    <i class="bi bi-chat-left-text me-1"></i>Сообщение
+                                </label>
+                                <textarea
+                                    class="form-control"
+                                    id="message"
+                                    name="message"
+                                    rows="4"
+                                    placeholder="Ваше сообщение..."
+                                    required></textarea>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-send-fill me-2"></i>Отправить
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- ================== ФУТЕР =================== -->
+    <!-- ============================================ -->
+    <footer class="bg-dark text-white text-center py-4 mt-auto">
+        <div class="container">
+            <p class="mb-0">SkyStore © 2023</p>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- =========== Bootstrap JavaScript =========== -->
+    <!-- ============================================ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
